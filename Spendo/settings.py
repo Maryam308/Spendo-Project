@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'Dashboard',
     'Goals',
     'Profiles',
-    'Transactions'
+    'Transactions',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'dashboard-home'  # Redirect after successful login
+LOGOUT_REDIRECT_URL = 'login'          # Redirect after logout
+LOGIN_URL = 'login'                    # Default login page
