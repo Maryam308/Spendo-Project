@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from db_connection import db
 from db_connection import users_collection
 import bcrypt
-
-
+from django.contrib.auth import logout
 
 users_collection = db['users_authentication'] 
 
@@ -72,3 +71,8 @@ def signup_view(request):
         'password': password,
         'confirm_password': confirm_password,
     })
+
+
+def logout_view(request):
+    logout(request)  # Log the user out
+    return redirect('profiles:login')  # Redirect to the login page
