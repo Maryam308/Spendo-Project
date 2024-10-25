@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('Profiles.urls', 'profiles'), namespace='profiles')),
     path('transactions/',include(('Transactions.urls','transactions'),namespace='transactions')),
-
+    path('goals/',include(('Goals.urls','goals'),namespace='goals')),
    
 ]

@@ -17,7 +17,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)  # Log in the user
-            return redirect('transactions/')  
+  
         else:
             return redirect('login')  # If login fails, reload login page with error
 
