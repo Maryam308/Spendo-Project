@@ -4,6 +4,7 @@ url = 'mongodb://localhost:27017'
 client = pymongo.MongoClient(url)
 
 db = client['spendo_db']
+users_collection = db['users_authentication']
 
 # Testing the connection: 
 try:
