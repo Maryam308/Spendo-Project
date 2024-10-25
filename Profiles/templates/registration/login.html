@@ -26,7 +26,7 @@
       <div class="row w-75 shadow-lg">
         <!-- Left Section (Image Background) -->
         <div
-          class="bg-custom col-lg-6 bg-custom p-5 d-flex flex-column justify-content-center align-items-center"
+          class="bg-custom col-lg-6 p-5 d-flex flex-column justify-content-center align-items-center"
         >
           <h1 class="display-4">Welcome to Spendo!</h1>
           <p class="lead mt-3">Turning your financial goals into reality</p>
@@ -36,6 +36,12 @@
         <div class="col-lg-6 text-black p-5">
           <h2 class="mb-4">Login</h2>
           <p class="mb-4">Welcome back! Please log in to your account</p>
+
+          <!-- Bootstrap Alert for Error Messages -->
+          {% if error_message %}
+          <div class="alert alert-danger" role="alert">{{ error_message }}</div>
+          {% endif %}
+
           <form method="post">
             {% csrf_token %}
             <div class="mb-3">
