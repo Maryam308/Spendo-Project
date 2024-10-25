@@ -5,6 +5,7 @@ client = pymongo.MongoClient(url)
 
 db = client['spendo_db']
 users_collection = db['users_authentication']
+transactions_collection = db['transactions']
 
 # Testing the connection: 
 try:

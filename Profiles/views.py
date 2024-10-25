@@ -10,30 +10,18 @@ from db_connection import users_collection
 users_collection = db['users_authentication'] 
 
 def login_view(request):
-    error_message = ""  # Initialize an empty error message
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
 
-        # Check if the user exists in the MongoDB collection
-        user_record = users_collection.find_one({'username': username})
-
-        if user_record is None:
-            error_message = "Username does not exist."
+        if user is not None:
+            login(request, user)  # Log in the user
+            return redirect('transactions/')  
         else:
-            # Verify the password
-            if bcrypt.checkpw(password.encode('utf-8'), user_record['password']):
-                # If password matches, authenticate and log the user in
-                user = authenticate(request, username=username, password=password)
-                if user is not None:
-                    login(request, user)  # Log in the user
-                    return redirect('dashboard')  # Redirect to dashboard
-            else:
-                error_message = "Incorrect password."
+            return redirect('login')  # If login fails, reload login page with error
 
-    return render(request, 'registration/login.html', {
-        'error_message': error_message,
-    })
+    return render(request, 'registration/login.html')
 
 def signup_view(request):
     error_message = ""
