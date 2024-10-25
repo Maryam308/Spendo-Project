@@ -1,11 +1,9 @@
-import bcrypt
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-from pymongo import MongoClient
-from django.conf import settings
 from db_connection import db
 from db_connection import users_collection
+import bcrypt
+
+
 
 users_collection = db['users_authentication'] 
 
@@ -13,15 +11,25 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)  # Log in the user
-  
+        
+        # Find the user in the MongoDB collection by username
+        user = users_collection.find_one({'username': username})
+        
+        if user:  # If a user is found
+            # Verify the password using bcrypt
+            if bcrypt.checkpw(password.encode('utf-8'), user['password']):
+                # Store the user ID in the session
+                request.session['user_id'] = str(user['_id'])  
+                return redirect('dashboard/')  # Redirect to dashboard page after login
+            else:
+                error_message = "Invalid username or password."
         else:
-            return redirect('login')  # If login fails, reload login page with error
+            error_message = "Invalid username or password."
+        
+        return render(request, 'registration/login.html', {'error_message': error_message})
 
-    return render(request, 'registration/login.html')
+    return render(request, 'registration/login.html')  # Render the login page for GET request
+
 
 def signup_view(request):
     error_message = ""
