@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'Dashboard',
     'Goals',
     'Profiles',
+    'Settings',
     'Transactions',
-    'widget_tweaks'
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

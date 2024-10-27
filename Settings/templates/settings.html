@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  My Settings - Spendo
+{% endblock %}
+
+{% block active_settings %}
+  active bg-danger text-white
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4">Settings</h2>
+    <div class="card shadow-sm bg-dark text-light">
+      <div class="card-body">
+        <!-- Profile Picture Display -->
+        <div class="text-center mb-4">
+          <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" />
+        </div>
+
+        <form action="{% url 'settings:settings' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <!-- Username Field -->
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control bg-secondary text-light" id="username" name="username" value="{{ user.username }}">
+          </div>
+
+          <!-- Password Field -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control bg-secondary text-light" id="password" name="password">
+          </div>
+
+          <!-- Currency Selection -->
+          <div class="mb-3">
+            <label for="currency" class="form-label">Currency</label>
+            <select class="form-select bg-secondary text-light" id="currency" name="currency">
+              {% for currency in currencies %}
+                <option value="{{ currency.alpha_3 }}" {% if user.currency == currency.alpha_3 %}selected{% endif %}>
+                  {{ currency.alpha_3 }} - {{ currency.name }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Profile Picture Upload -->
+          <div class="mb-3">
+            <label for="profile_picture" class="form-label">Profile Picture</label>
+            <input type="file" class="form-control bg-secondary text-light" id="profile_picture" name="profile_picture">
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-grid">
+            <button type="submit" class="btn btn-danger">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
