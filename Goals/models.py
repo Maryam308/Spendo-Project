@@ -23,3 +23,10 @@ class Goal(models.Model):
         if self.status != 'Completed' and timezone.now().date() > self.due_date:
             self.status = 'Expired'
             self.save()  # Save the updated status to the database
+
+
+new_goal = Goal(
+    title='Save for New Laptop',  # Set the goal title
+    amount=1200.00,                # Set the goal amount
+    due_date='2025-01-01'          # Set the due date
+)
